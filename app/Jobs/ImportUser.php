@@ -29,6 +29,10 @@ class ImportUser implements ShouldQueue
      */
     public function handle()
     {
+        if(rand(1, 2) === 1) {
+            throw new \Exception("Ash is a Turkey Twizzler");
+        }
+
         Log::info($this->user->name);
         // Handle if this is an update or an insert
         $this->user->save();

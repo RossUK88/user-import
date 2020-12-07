@@ -32,5 +32,23 @@
         <li>Failed {{ $batch->failedJobs }}</li>
     </ul>
 
+    <table>
+        <thead>
+        <tr>
+            <th>Job</th>
+            <th>Exception</th>
+        </tr>
+        </thead>
+        <tbody>
+        @forelse($failedJobs as $job)
+            <tr>
+                <td>{{ $job->uuid }}</td>
+                <td>{{ $job->exception }}</td>
+            </tr>
+        @empty
+            <td colspan="2">No Failed Jobs</td>
+        @endforelse
+        </tbody>
+    </table>
 </body>
 </html>

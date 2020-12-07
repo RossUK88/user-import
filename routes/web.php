@@ -2,6 +2,7 @@
 <?php
 
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,8 +20,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/batch/{batchId}', function (string $batchId) {
+    $batch = Bus::findBatch($batchId);
+
+    if(count($batch->failedJobIds) > 0) {
+        $failedJobs = DB::table('failed_jobs')->whereIn('uuid', $batch->failedJobIds)->get();
+    }
+
     return view('batch', [
         'batchId' => $batchId,
-        'batch' => Bus::findBatch($batchId)
+        'batch' => $batch,
+        'failedJobs' => $failedJobs ?? []
     ]);
 });
