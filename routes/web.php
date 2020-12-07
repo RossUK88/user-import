@@ -1,5 +1,7 @@
+
 <?php
 
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+Route::get('/batch/{batchId}', function (string $batchId) {
+    return view('batch', [
+        'batchId' => $batchId,
+        'batch' => Bus::findBatch($batchId)
+    ]);
 });
